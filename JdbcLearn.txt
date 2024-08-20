@@ -1,0 +1,39 @@
+// steps:
+
+import the java.sql package;
+    (to get all the interface present like Connnection interface).
+    
+1). Load the driver
+    2 ways: 
+        -> class.forName(class);  -> class = "com.mysql.jdbc.Driver"
+        -> DriverManager.registerDriver(new com.mysql.jdbc.Driver);
+
+2). create a connection
+    Connnection con = DriverManager.getConnection("url", "username", "password");
+        url: "jdbc:mysql://localhost:port/dbname   (for mysql)
+
+3). create query, 
+    then use -> Statement, PreparedStatement, CallableStatement
+
+
+    eg:
+    String q = "select * from students";
+    Statement stmt = con.createStatement();
+
+    // executeUpdate(q) -> when no data is returned by the database.
+    // preparedStatement: used for dynamic/paramitarized queries (which accept parameter dynamically). eg: values(?,?).
+    // if data is returned, use executeQuery, and store in ResultSet object.
+    ResultSet set = stmt.executeQuery(q);
+    // ResultSet is storing data in same as the table (in form of rows and columns)
+    // ResultSet has a pointer which points to above the first row in the beginning.
+    // to go to next row, use next() method.
+
+4). Process the data
+    while(set.next()) {
+        int id = set.getInt(columnNo or "columnName");
+        String name = set.getString(columnNo or "columnName");
+        System.out.println("id: " + id +",name: " + name);
+    }
+
+5). close the connection
+    con.close();
